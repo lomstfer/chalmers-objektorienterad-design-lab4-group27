@@ -64,7 +64,6 @@ public class CarController {
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getPositionX());
                 int y = (int) Math.round(vehicle.getPositionY());
-                System.out.println(y);
                 if (x < 0 || y < 0 || x > 750 || y > 750) {
                     vehicle.uTurn(xBefore, yBefore);
                 }

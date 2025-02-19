@@ -33,7 +33,6 @@ public class DrawPanel extends JPanel{
                 scaniaImageDrawer.setPoint(new Point(x, y));
                 break;
         }
-
     }
 
     // Initializes the panel and reads the images
