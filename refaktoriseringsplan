@@ -1,0 +1,11 @@
+refaktoriseringsplan:
+
+1: mindre coupling
+Flytta ut addActionListener från CarView till CarController. Då beror inte längre CarView på CarController, så carC kan tas bort CarView’s från dess attribut.
+CarView kan fortfarande ha tomma action-listener's som den kan använda för framtida ändamål.
+
+2: mindre coupling
+Skapa en funktion setVehicleDrawState i CarView för att undvika att CarController ska bero på DrawPanel. CarController kör då setVehicleDrawState som i sin tur kör DrawPanel’s moveit.
+
+3: extensibilitet
+Skapa en ImageDrawer istället för VehicleImageDrawer. Så att man kan använda den för Workshops m.m. också. Då blir det lite mindre coupling också, eftersom DrawPanel slipper använda BufferedImage
