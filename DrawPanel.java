@@ -1,38 +1,29 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 // This panel represents the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel{
-    VehicleImageDrawer volvoImageDrawer;
-    VehicleImageDrawer saab95ImageDrawer;
-    VehicleImageDrawer scaniaImageDrawer;
+public class DrawPanel extends JPanel {
+    ImageDrawer volvoImageDrawer;
+    ImageDrawer saab95ImageDrawer;
+    ImageDrawer scaniaImageDrawer;
+    ImageDrawer unsupportedImageDrawer;
 
-    BufferedImage volvoWorkshopImage;
+    ImageDrawer volvoWorkshopImageDrawer;
     Point volvoWorkshopPoint = new Point(300,300);
+
+    List<Vehicle> vehiclesToDraw = new ArrayList<>();
 
     void setWorkshopPosition(Point position) {
         volvoWorkshopPoint = position;
     }
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y, String carName){
-        switch (carName) {
-            case "Volvo240":
-                volvoImageDrawer.setPoint(new Point(x, y));
-                break;
-            case "Saab95":
-                saab95ImageDrawer.setPoint(new Point(x, y));
-                break;
-            case "Scania":
-                scaniaImageDrawer.setPoint(new Point(x, y));
-                break;
-        }
+    void updateVehiclesToDraw(List<Vehicle> vehicles){
+        vehiclesToDraw = vehicles;
     }
 
     // Initializes the panel and reads the images
@@ -49,15 +40,12 @@ public class DrawPanel extends JPanel{
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
 
-            BufferedImage volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
-            BufferedImage saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
-            BufferedImage scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            volvoImageDrawer = new ImageDrawer("pics/Volvo240.jpg");
+            saab95ImageDrawer = new ImageDrawer("pics/Saab95.jpg");
+            scaniaImageDrawer = new ImageDrawer("pics/Scania.jpg");
+            unsupportedImageDrawer = new ImageDrawer();
 
-            volvoImageDrawer = new VehicleImageDrawer(volvoImage);
-            saab95ImageDrawer = new VehicleImageDrawer(saabImage);
-            scaniaImageDrawer = new VehicleImageDrawer(scaniaImage);
-
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            volvoWorkshopImageDrawer = new ImageDrawer("pics/VolvoBrand.jpg");
         } catch (IOException ex)
         {
             ex.printStackTrace();
@@ -70,9 +58,23 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        volvoImageDrawer.drawSelf(g);
-        saab95ImageDrawer.drawSelf(g);
-        scaniaImageDrawer.drawSelf(g);
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        for (Vehicle v : vehiclesToDraw) {
+            switch (v.modelName) {
+                case "Volvo240":
+                    volvoImageDrawer.draw(g, (int)v.getPositionX(), (int)v.getPositionY());
+                    break;
+                case "Saab95":
+                    saab95ImageDrawer.draw(g, (int)v.getPositionX(), (int)v.getPositionY());
+                    break;
+                case "Scania":
+                    scaniaImageDrawer.draw(g, (int)v.getPositionX(), (int)v.getPositionY());
+                    break;
+                default:
+                    unsupportedImageDrawer.draw(g, (int)v.getPositionX(), (int)v.getPositionY());
+                    break;
+            }
+        }
+
+        volvoWorkshopImageDrawer.draw(g, volvoWorkshopPoint.x, volvoWorkshopPoint.y);
     }
 }
