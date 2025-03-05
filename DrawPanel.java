@@ -13,7 +13,7 @@ public class DrawPanel extends JPanel {
     ImageDrawer unsupportedImageDrawer;
 
     ImageDrawer volvoWorkshopImageDrawer;
-    Point volvoWorkshopPoint = new Point(300,300);
+    Point volvoWorkshopPoint;
 
     List<Vehicle> vehiclesToDraw = new ArrayList<>();
 

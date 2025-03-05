@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CarModel {
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -14,7 +15,7 @@ public class CarModel {
     private ArrayList<ModelUpdateObserver> observers = new ArrayList<>();
 
     private ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private Workshop<Volvo240> workshop = new Workshop<>(2, new Point(400, 0));
+    private Workshop<Volvo240> workshop = new Workshop<>(2, new Point(600, 20));
 
     CarModel() {
         vehicles.add(new Volvo240(0,0));
@@ -27,10 +28,14 @@ public class CarModel {
         timer.start();
     }
 
-    void addObserver(ModelUpdateObserver o) {
+    public Point getWorkshopPosition() {
+        return new Point(workshop.getPosition());
+    }
+
+    public void addObserver(ModelUpdateObserver o) {
         observers.add(o);
     }
-    void removeObserver(ModelUpdateObserver o) {
+    public void removeObserver(ModelUpdateObserver o) {
         observers.remove(o);
     }
     private void notifyListeners() {
@@ -117,5 +122,27 @@ public class CarModel {
             vehicle.stopEngine();
         }
     }
+    void addRandomCar(){
+        if (vehicles.size() < 99) {
+            vehicles.add(createRandomCar());
+        }
+    }
+    void removeNewestCar(){
+        vehicles.removeLast();
+    }
 
+
+    private Vehicle createRandomCar() {
+        Random rand = new Random();
+        int n = rand.nextInt(3);
+        int randomY = rand.nextInt(520);
+        Vehicle newVehicle = new Volvo240(0, randomY);
+        if (n == 1) {
+            newVehicle = new Saab95(0, randomY);
+        }
+        else if (n == 2) {
+            newVehicle = new Scania(0, randomY);
+        }
+        return newVehicle;
+    }
 }

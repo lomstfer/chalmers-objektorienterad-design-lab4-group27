@@ -20,24 +20,25 @@ public class CarView extends JFrame implements ModelUpdateObserver {
 
     // The controller member
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+    private final DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
-    JPanel controlPanel = new JPanel();
+    private final JPanel controlPanel = new JPanel();
 
-    JPanel gasPanel = new JPanel();
-    JSpinner gasSpinner = new JSpinner();
+    private final JPanel gasPanel = new JPanel();
+    private JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    final JLabel gasLabel = new JLabel("Amount of gas");
 
-    JButton gasButton = new JButton("Gas");
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
-
-    JButton startButton = new JButton("Start all cars");
-    JButton stopButton = new JButton("Stop all cars");
+    final JButton gasButton = new JButton("Gas");
+    final JButton brakeButton = new JButton("Brake");
+    final JButton turboOnButton = new JButton("Saab Turbo on");
+    final JButton turboOffButton = new JButton("Saab Turbo off");
+    final JButton liftBedButton = new JButton("Scania Lift Bed");
+    final JButton lowerBedButton = new JButton("Lower Lift Bed");
+    final JButton startButton = new JButton("Start all cars");
+    final JButton stopButton = new JButton("Stop all cars");
+    final JButton addCarButton = new JButton("Add car");
+    final JButton removeCarButton = new JButton("Remove car");
 
     // Constructor
     public CarView(String framename, Point workshopPosition){
@@ -75,7 +76,7 @@ public class CarView extends JFrame implements ModelUpdateObserver {
 
         this.add(gasPanel);
 
-        controlPanel.setLayout(new GridLayout(2,4));
+        controlPanel.setLayout(new GridLayout(2,5));
 
         controlPanel.add(gasButton, 0);
         controlPanel.add(turboOnButton, 1);
@@ -83,6 +84,8 @@ public class CarView extends JFrame implements ModelUpdateObserver {
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);

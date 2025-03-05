@@ -54,5 +54,17 @@ public class CarController {
             public void actionPerformed(ActionEvent e) { model.stopAll();
             }
         });
+        view.addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { model.addRandomCar();
+            }
+        });
+        view.removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { model.removeNewestCar();
+            }
+        });
+
+
     }
 }
